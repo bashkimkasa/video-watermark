@@ -72,6 +72,7 @@ video_fps = video.get(cv2.CAP_PROP_FPS)
 # Display video info and watermark info in the log
 logging.info(f'Video size: {video_height}x{video_width}')
 logging.info(f'Video fps: {video_fps}')
+logging.info(f'Video number of frames: {int(video.get(cv2.CAP_PROP_FRAME_COUNT))}')
 logging.info(f'Watermark size: {watermark.shape[0]}x{watermark.shape[1]}')
 
 # If watermark is greater than 1/4 of the video frame size we'll decrease watermark size by half recursively
@@ -88,12 +89,16 @@ position = (video_width - watermark_width - 10, video_height - watermark_height 
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter(output_video_file_path, fourcc, video_fps, (video_width, video_height))
 
+# Start video processing
+logging.info('Video processing started')
 while True:
     # Read the next frame
     ret, frame = video.read()
 
     # Check if there is a next frame
     if not ret:
+        # Display video processing complete
+        logging.info('Video processing complete')
         break
 
     # Get the region of interest (ROI) in the frame for placing the watermark
@@ -120,7 +125,7 @@ while True:
     cv2.imshow('Video with watermark', frame)
 
     # Write the frame with the watermark to the output video file
-    # out.write(frame)
+    out.write(frame)
 
     # Break the loop if 'q' is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):
