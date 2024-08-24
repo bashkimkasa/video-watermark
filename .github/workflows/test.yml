@@ -28,7 +28,9 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run app
-      run: python main.py
+      run: |
+        xhost +local:  
+        python main.py
 
   # This job does nothing, is only for testing and depends on the test-app job
   do-nothing-job:
