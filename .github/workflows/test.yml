@@ -1,0 +1,43 @@
+name: Test App
+
+on:
+  pull_request:
+
+env:
+  PYTHON_VERSION: 3.x
+
+# Check out the code
+# Install python
+# Install dependencies
+# Run app
+jobs:
+  test-app:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run app
+      run: python main.py
+
+  # This job does nothing, is only for testing and depends on the test-app job
+  do-nothing-job:
+    needs: test-app
+    runs-on: ubuntu-latest
+    steps:
+    - name: Do nothing
+      run: echo "This job does nothing"
+
+
+    
+

@@ -8,7 +8,7 @@ This is a sample python app that adds a watermark(png) to a video(mp4) file. It 
 ## Getting started
 Install libraries
 ```sh
-pip install opencv-python
+pip install -r requirements.txt
 ```
   
 Run python main.py file
