@@ -26,10 +26,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        sudo apt-get install libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev
+        sudo apt-get install libxkbcommon-x11-dev
 
     - name: Run app
-      run: |
-        xhost +local:  
+      run: | 
         python main.py
 
   # This job does nothing, is only for testing and depends on the test-app job
