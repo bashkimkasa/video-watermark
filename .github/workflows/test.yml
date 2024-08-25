@@ -36,7 +36,7 @@ jobs:
     needs: test-app
     runs-on: ubuntu-latest
     steps:
-    - name: Do nothing test
+    - name: Do nothing
       run: echo "This job does nothing"
 
 
