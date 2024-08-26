@@ -11,7 +11,7 @@ env:
 # Install dependencies
 # Run app
 jobs:
-  test-app:
+  job1:
     runs-on: windows-latest
     steps:
     - name: Check out code
@@ -31,13 +31,22 @@ jobs:
       run: | 
         python main.py
 
-  # This job does nothing, is only for testing and depends on the test-app job
-  do-nothing-job:
-    needs: test-app
+  job2:
+    needs: job1
     runs-on: ubuntu-latest
     steps:
     - name: Do nothing testing
       run: echo "This job does nothing"
+
+  job3:
+    needs: job2
+    uses: ./.github/workflows/reusable-test.yml
+    with:
+      node: 14.x
+    secrets: inherit
+
+  
+  
 
 
     
