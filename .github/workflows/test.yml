@@ -11,14 +11,14 @@ env:
 # Install dependencies
 # Run app
 jobs:
-  test-app:
-    runs-on: ubuntu-latest
+  job1:
+    runs-on: windows-latest
     steps:
     - name: Check out code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
@@ -28,15 +28,25 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run app
-      run: python main.py
+      run: | 
+        python main.py
 
-  # This job does nothing, is only for testing and depends on the test-app job
-  do-nothing-job:
-    needs: test-app
+  job2:
+    needs: job1
     runs-on: ubuntu-latest
     steps:
-    - name: Do nothing
+    - name: Do nothing testing
       run: echo "This job does nothing"
+
+  job3:
+    needs: job2
+    uses: ./.github/workflows/reusable-test.yml
+    with:
+      node: 14.x
+    secrets: inherit
+
+  
+  
 
 
     

@@ -1,0 +1,33 @@
+name: Reusable Workflow
+
+on:
+  workflow_call:
+    inputs:
+      node:
+        required: true
+        type: string
+        description: 'The node to run the workflow on'
+
+jobs: 
+  job3_1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Output the input value
+        run: |
+         echo "The node version to use is: ${{ inputs.node }}"
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ inputs.node }}
+  
+  job3_2:
+    needs: job3_1
+    uses: bashkimkasa/video-watermark/.github/workflows/reusable-test2.yml@newer_action_versions
+    with:
+      go_version: 1.17
+    secrets: inherit
+
+  
