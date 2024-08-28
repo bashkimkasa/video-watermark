@@ -1,0 +1,24 @@
+name: Reusable Workflow 2
+
+on:
+  workflow_call:
+    inputs:
+      go_version:
+        required: true
+        type: string
+        description: 'The Go version to run the workflow on'
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Output the input value
+        run: |
+         echo "The go version to use is: ${{ inputs.go_version }}"
+      
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ inputs.go_version }}
